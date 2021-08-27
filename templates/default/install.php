@@ -631,7 +631,7 @@ $diskFreeSpace = Str::memoryFormat((int) disk_free_space("."));
                     </div>
                     <div class="mdui-textfield">
                         <label class="mdui-textfield-label">表前缀</label>
-                        <input class="mdui-textfield-input" name="db_prefix" value="mc_"/>
+                        <input class="mdui-textfield-input" name="db_prefix" value=""/>
                         <div class="mdui-textfield-helper">如果您希望在同一个数据库安装多个MDClub，请修改前缀。</div>
                     </div>
                 </div>

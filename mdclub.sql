@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `mc_answer`;
-CREATE TABLE IF NOT EXISTS `mc_answer` (
+DROP TABLE IF EXISTS `answer`;
+CREATE TABLE IF NOT EXISTS `answer` (
   `answer_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '回答ID',
   `question_id` int(11) UNSIGNED NOT NULL COMMENT '问题ID',
   `user_id` int(11) UNSIGNED NOT NULL COMMENT '用户ID',
@@ -19,8 +19,8 @@ CREATE TABLE IF NOT EXISTS `mc_answer` (
   KEY `create_time` (`create_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='回答表';
 
-DROP TABLE IF EXISTS `mc_article`;
-CREATE TABLE IF NOT EXISTS `mc_article` (
+DROP TABLE IF EXISTS `article`;
+CREATE TABLE IF NOT EXISTS `article` (
   `article_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '文章ID',
   `user_id` int(11) UNSIGNED NOT NULL COMMENT '用户ID',
   `title` varchar(80) NOT NULL COMMENT '标题',
@@ -40,8 +40,8 @@ CREATE TABLE IF NOT EXISTS `mc_article` (
   KEY `vote_count` (`vote_count`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='文章表';
 
-DROP TABLE IF EXISTS `mc_cache`;
-CREATE TABLE IF NOT EXISTS `mc_cache` (
+DROP TABLE IF EXISTS `cache`;
+CREATE TABLE IF NOT EXISTS `cache` (
   `name` varchar(180) NOT NULL,
   `value` text NOT NULL,
   `create_time` int(10) UNSIGNED DEFAULT NULL COMMENT '创建时间',
@@ -49,8 +49,8 @@ CREATE TABLE IF NOT EXISTS `mc_cache` (
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='缓存表';
 
-DROP TABLE IF EXISTS `mc_comment`;
-CREATE TABLE IF NOT EXISTS `mc_comment` (
+DROP TABLE IF EXISTS `comment`;
+CREATE TABLE IF NOT EXISTS `comment` (
   `comment_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '回答评论ID',
   `commentable_id` int(11) UNSIGNED NOT NULL COMMENT '评论目标的ID',
   `commentable_type` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '评论目标类型：article、question、answer、comment',
@@ -70,8 +70,8 @@ CREATE TABLE IF NOT EXISTS `mc_comment` (
   KEY `vote_count` (`vote_count`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='回答评论表';
 
-DROP TABLE IF EXISTS `mc_follow`;
-CREATE TABLE IF NOT EXISTS `mc_follow` (
+DROP TABLE IF EXISTS `follow`;
+CREATE TABLE IF NOT EXISTS `follow` (
   `user_id` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '用户ID',
   `followable_id` int(11) UNSIGNED NOT NULL COMMENT '关注目标的ID',
   `followable_type` char(10) NOT NULL COMMENT '关注目标类型 user、question、article、topic',
@@ -80,8 +80,8 @@ CREATE TABLE IF NOT EXISTS `mc_follow` (
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='文章关注关系表';
 
-DROP TABLE IF EXISTS `mc_image`;
-CREATE TABLE IF NOT EXISTS `mc_image` (
+DROP TABLE IF EXISTS `image`;
+CREATE TABLE IF NOT EXISTS `image` (
   `key` varchar(50) NOT NULL COMMENT '图片键名',
   `filename` varchar(255) NOT NULL COMMENT '原始文件名',
   `width` int(5) UNSIGNED NOT NULL DEFAULT '0' COMMENT '原始图片宽度',
@@ -96,8 +96,8 @@ CREATE TABLE IF NOT EXISTS `mc_image` (
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-DROP TABLE IF EXISTS `mc_inbox`;
-CREATE TABLE IF NOT EXISTS `mc_inbox` (
+DROP TABLE IF EXISTS `inbox`;
+CREATE TABLE IF NOT EXISTS `inbox` (
   `inbox_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '私信ID',
   `receiver_id` int(11) UNSIGNED NOT NULL COMMENT '接收者ID',
   `sender_id` int(11) UNSIGNED NOT NULL COMMENT '发送者ID',
@@ -110,8 +110,8 @@ CREATE TABLE IF NOT EXISTS `mc_inbox` (
   KEY `sender_id` (`sender_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='私信表';
 
-DROP TABLE IF EXISTS `mc_notification`;
-CREATE TABLE IF NOT EXISTS `mc_notification` (
+DROP TABLE IF EXISTS `notification`;
+CREATE TABLE IF NOT EXISTS `notification` (
   `notification_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '通知ID',
   `receiver_id` int(11) UNSIGNED NOT NULL COMMENT '接收者ID',
   `sender_id` int(11) NOT NULL COMMENT '发送者ID',
@@ -128,14 +128,14 @@ CREATE TABLE IF NOT EXISTS `mc_notification` (
   KEY `receiver_id` (`receiver_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='通知表';
 
-DROP TABLE IF EXISTS `mc_option`;
-CREATE TABLE IF NOT EXISTS `mc_option` (
+DROP TABLE IF EXISTS `option`;
+CREATE TABLE IF NOT EXISTS `option` (
   `name` varchar(40) NOT NULL DEFAULT '' COMMENT '字段名',
   `value` text NOT NULL COMMENT '字段值',
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='设置表';
 
-INSERT INTO `mc_option` (`name`, `value`) VALUES
+INSERT INTO `option` (`name`, `value`) VALUES
 ('answer_can_delete', 'false'),
 ('answer_can_delete_before', '0'),
 ('answer_can_delete_only_no_comment', 'true'),
@@ -216,8 +216,8 @@ INSERT INTO `mc_option` (`name`, `value`) VALUES
 ('storage_url', ''),
 ('theme', 'material');
 
-DROP TABLE IF EXISTS `mc_question`;
-CREATE TABLE IF NOT EXISTS `mc_question` (
+DROP TABLE IF EXISTS `question`;
+CREATE TABLE IF NOT EXISTS `question` (
   `question_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '问题ID',
   `user_id` int(11) UNSIGNED NOT NULL COMMENT '用户ID',
   `title` varchar(80) NOT NULL COMMENT '标题',
@@ -240,8 +240,8 @@ CREATE TABLE IF NOT EXISTS `mc_question` (
   KEY `vote_count` (`vote_count`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='问题表';
 
-DROP TABLE IF EXISTS `mc_report`;
-CREATE TABLE IF NOT EXISTS `mc_report` (
+DROP TABLE IF EXISTS `report`;
+CREATE TABLE IF NOT EXISTS `report` (
   `report_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `reportable_id` int(11) UNSIGNED NOT NULL COMMENT '举报目标ID',
   `reportable_type` char(10) NOT NULL COMMENT '举报目标类型：question、article、answer、comment、user',
@@ -254,8 +254,8 @@ CREATE TABLE IF NOT EXISTS `mc_report` (
   KEY `create_time` (`create_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='举报';
 
-DROP TABLE IF EXISTS `mc_token`;
-CREATE TABLE IF NOT EXISTS `mc_token` (
+DROP TABLE IF EXISTS `token`;
+CREATE TABLE IF NOT EXISTS `token` (
   `token` varchar(50) NOT NULL DEFAULT '' COMMENT 'token 字符串',
   `user_id` int(11) UNSIGNED NOT NULL COMMENT '用户ID',
   `device` varchar(600) NOT NULL DEFAULT '' COMMENT '登陆设备，浏览器 UA 等信息',
@@ -266,8 +266,8 @@ CREATE TABLE IF NOT EXISTS `mc_token` (
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户TOKEN';
 
-DROP TABLE IF EXISTS `mc_topic`;
-CREATE TABLE IF NOT EXISTS `mc_topic` (
+DROP TABLE IF EXISTS `topic`;
+CREATE TABLE IF NOT EXISTS `topic` (
   `topic_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '话题ID',
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '话题名称',
   `cover` varchar(50) DEFAULT NULL COMMENT '封面图片token',
@@ -281,8 +281,8 @@ CREATE TABLE IF NOT EXISTS `mc_topic` (
   KEY `follower_count` (`follower_count`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='话题表';
 
-DROP TABLE IF EXISTS `mc_topicable`;
-CREATE TABLE IF NOT EXISTS `mc_topicable` (
+DROP TABLE IF EXISTS `topicable`;
+CREATE TABLE IF NOT EXISTS `topicable` (
   `topic_id` int(11) UNSIGNED NOT NULL COMMENT '话题ID',
   `topicable_id` int(11) UNSIGNED NOT NULL COMMENT '话题关系对应的ID',
   `topicable_type` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '话题关系对应的类型 question、article',
@@ -291,8 +291,8 @@ CREATE TABLE IF NOT EXISTS `mc_topicable` (
   KEY `topicable_id` (`topicable_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-DROP TABLE IF EXISTS `mc_user`;
-CREATE TABLE IF NOT EXISTS `mc_user` (
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
   `user_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `username` varchar(20) NOT NULL COMMENT '用户名',
   `email` varchar(320) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '邮箱',
@@ -329,8 +329,8 @@ CREATE TABLE IF NOT EXISTS `mc_user` (
   KEY `create_time` (`create_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户表';
 
-DROP TABLE IF EXISTS `mc_vote`;
-CREATE TABLE IF NOT EXISTS `mc_vote` (
+DROP TABLE IF EXISTS `vote`;
+CREATE TABLE IF NOT EXISTS `vote` (
   `user_id` int(11) UNSIGNED NOT NULL COMMENT '用户ID',
   `votable_id` int(11) UNSIGNED NOT NULL COMMENT '投票目标ID',
   `votable_type` char(10) NOT NULL COMMENT '投票目标类型 question、answer、article、comment',
