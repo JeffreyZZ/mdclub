@@ -91,7 +91,7 @@ class User extends Abstracts
             'cover' => '',
             'create_ip' => Ip::getIp(),
             'create_location' => Ip::getLocation(),
-            'last_login_time' => Request::time(),
+            'last_login_time' => Request::getDatetimeStr(),
             'last_login_ip' => Ip::getIp(),
             'last_login_location' => Ip::getLocation(),
             'follower_count' => 0,

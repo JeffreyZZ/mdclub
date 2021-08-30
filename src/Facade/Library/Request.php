@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MDClub\Facade\Library;
 
+use DateTime;
 use MDClub\Initializer\Facade;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
@@ -66,6 +67,18 @@ class Request extends Facade
     public static function time(): int
     {
         return (int) (self::getServerParams()['REQUEST_TIME'] ?? time());
+    }
+
+    /**
+     * 获取请求时间戳 in DateTime string format
+     *
+     * @return string
+     */
+    public static function getDatetimeStr(): string
+    {
+        $unixtime = (int) (self::getServerParams()['REQUEST_TIME'] ?? time());
+        $datetime = new DateTime("@$unixtime");
+        return $datetime->format('Y-m-d H:i:s');
     }
 
     /**

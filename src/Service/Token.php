@@ -50,7 +50,7 @@ class Token extends Abstracts
 
         UserModel
             ::where('user_id', $userId)
-            ->set('last_login_time', Request::time())
+            ->set('last_login_time', Request::getDatetimeStr())
             ->set('last_login_ip', Ip::getIp())
             ->set('last_login_location', Ip::getLocation())
             ->update();
