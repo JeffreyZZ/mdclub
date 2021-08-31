@@ -24,7 +24,7 @@ class User extends Abstracts
         'email',
         'create_ip',
         'create_location',
-        'last_login_time',
+        'last_login',
         'last_login_ip',
         'last_login_location',
         'notification_unread',

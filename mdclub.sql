@@ -301,7 +301,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(255) NOT NULL COMMENT '密码',
   `create_ip` varchar(80) DEFAULT NULL COMMENT '注册IP',
   `create_location` varchar(100) DEFAULT NULL COMMENT '注册地址',
-  `last_login_time` DATETIME(6) DEFAULT NULL COMMENT '最后登录时间',
+  `last_login` DATETIME(6) DEFAULT NULL COMMENT '最后登录时间',
   `last_login_ip` varchar(80) DEFAULT NULL COMMENT '最后登陆IP',
   `last_login_location` varchar(100) DEFAULT NULL COMMENT '最后登录地址',
   `follower_count` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '关注我的人数',
