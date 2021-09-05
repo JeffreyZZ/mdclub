@@ -14,13 +14,13 @@ use MDClub\Helper\Ip;
 class User extends Abstracts
 {
     public $table = 'user';
-    public $primaryKey = 'user_id';
+    public $primaryKey = 'id';
     protected $timestamps = true;
 
     // 被禁用的用户也是真实用户，不作为软删除字段处理
 
     public $columns = [
-        'user_id',
+        'id',
         'username',
         'email',
         'avatar',
@@ -57,7 +57,7 @@ class User extends Abstracts
     ];
 
     public $allowFilterFields = [
-        'user_id',
+        'id',
         'username',
     ];
 
@@ -164,7 +164,7 @@ class User extends Abstracts
     public function incAnswerCount(int $userId, int $count = 1): void
     {
         $this
-            ->where('user_id', $userId)
+            ->where('id', $userId)
             ->inc('answer_count', $count)
             ->update();
     }
@@ -178,7 +178,7 @@ class User extends Abstracts
     public function decAnswerCount(int $userId, int $count = 1): void
     {
         $this
-            ->where('user_id', $userId)
+            ->where('id', $userId)
             ->dec('answer_count', $count)
             ->update();
     }
@@ -192,7 +192,7 @@ class User extends Abstracts
     public function incArticleCount(int $userId, int $count = 1): void
     {
         $this
-            ->where('user_id', $userId)
+            ->where('id', $userId)
             ->inc('article_count', $count)
             ->update();
     }
@@ -206,7 +206,7 @@ class User extends Abstracts
     public function decArticleCount(int $userId, int $count = 1): void
     {
         $this
-            ->where('user_id', $userId)
+            ->where('id', $userId)
             ->dec('article_count', $count)
             ->update();
     }
@@ -220,7 +220,7 @@ class User extends Abstracts
     public function incQuestionCount(int $userId, int $count = 1): void
     {
         $this
-            ->where('user_id', $userId)
+            ->where('id', $userId)
             ->inc('question_count', $count)
             ->update();
     }
@@ -234,7 +234,7 @@ class User extends Abstracts
     public function decQuestionCount(int $userId, int $count = 1): void
     {
         $this
-            ->where('user_id', $userId)
+            ->where('id', $userId)
             ->dec('question_count', $count)
             ->update();
     }
@@ -248,7 +248,7 @@ class User extends Abstracts
     public function decFollowingTopicCount(int $userId, int $count = 1): void
     {
         $this
-            ->where('user_id', $userId)
+            ->where('id', $userId)
             ->dec('following_topic_count', $count)
             ->update();
     }

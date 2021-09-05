@@ -247,7 +247,7 @@ class Article extends Abstracts implements
                 UserModel::dec('following_article_count', $user['following_article_count']);
             }
 
-            UserModel::where('user_id', $userId)->update();
+            UserModel::where('id', $userId)->update();
         }
 
         // 文章所属的话题的 article_count - 1

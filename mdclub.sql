@@ -293,7 +293,7 @@ CREATE TABLE IF NOT EXISTS `topicable` (
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
-  `user_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `username` varchar(20) NOT NULL COMMENT '用户名',
   `email` varchar(320) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '邮箱',
   `avatar` varchar(50) DEFAULT NULL COMMENT '头像token',
@@ -322,7 +322,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `create_time` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '注册时间',
   `update_time` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '更新时间',
   `disable_time` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '禁用时间',
-  PRIMARY KEY (`user_id`),
+  PRIMARY KEY (`id`),
   KEY `user_name` (`username`),
   KEY `email` (`email`),
   KEY `follower_count` (`follower_count`),

@@ -49,7 +49,7 @@ class Token extends Abstracts
             ->insert();
 
         UserModel
-            ::where('user_id', $userId)
+            ::where('id', $userId)
             ->set('last_login', Request::getDatetimeStr())
             ->set('last_login_ip', Ip::getIp())
             ->set('last_login_location', Ip::getLocation())

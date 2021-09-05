@@ -74,13 +74,13 @@ class UserCover
     {
         $data = UserCoverValidator::upload($data);
 
-        $user = UserModel::field(['user_id', 'cover'])->get($userId);
+        $user = UserModel::field(['id', 'cover'])->get($userId);
         if ($user['cover']) {
             $this->deleteImage($userId, $user['cover']);
         }
 
         $filename = $this->uploadImage($userId, $data['cover']);
-        UserModel::where('user_id', $userId)->update('cover', $filename);
+        UserModel::where('id', $userId)->update('cover', $filename);
 
         return $filename;
     }
@@ -92,14 +92,14 @@ class UserCover
      */
     public function delete(int $userId): void
     {
-        $user = UserModel::field(['user_id', 'cover'])->get($userId);
+        $user = UserModel::field(['id', 'cover'])->get($userId);
         if (!$user) {
             throw new ApiException(ApiErrorConstant::USER_NOT_FOUND);
         }
 
         if ($user['cover']) {
             $this->deleteImage($userId, $user['cover']);
-            UserModel::where('user_id', $userId)->update('cover', '');
+            UserModel::where('id', $userId)->update('cover', '');
         }
     }
 }

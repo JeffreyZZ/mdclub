@@ -48,7 +48,7 @@ trait Followable
             ->insert();
 
         UserModel
-            ::where('user_id', Auth::userId())
+            ::where('id', Auth::userId())
             ->inc($isUser ? 'followee_count' : "following_${table}_count")
             ->update();
 
@@ -83,7 +83,7 @@ trait Followable
             ->delete();
 
         UserModel
-            ::where('user_id', $userId)
+            ::where('id', $userId)
             ->dec($isUser ? 'followee_count' : "following_{$table}_count")
             ->update();
 
@@ -109,7 +109,7 @@ trait Followable
         return UserModel
             ::join(
                 [
-                    '[><]follow' => ['user_id' => 'user_id'],
+                    '[><]follow' => ['id' => 'user_id'],
                 ]
             )
             ->where(
@@ -132,10 +132,16 @@ trait Followable
         $table = $model->table;
         UserService::hasOrFail($userId);
 
+        $idColName = "${table}_id";
+        if ($table == "user")
+        {
+           $idColName = "id"; 
+        }
+
         return $model
             ->join(
                 [
-                    '[><]follow' => ["${table}_id" => 'followable_id'],
+                    '[><]follow' => [$idColName => 'followable_id'],
                 ]
             )
             ->where(

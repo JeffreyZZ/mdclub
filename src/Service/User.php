@@ -93,7 +93,7 @@ class User extends Abstracts implements FollowableInterface, GetableInterface
         }
 
         UserModel
-            ::where('user_id', $userId)
+            ::where('id', $userId)
             ->update('disable_time', 0);
     }
 
@@ -105,7 +105,7 @@ class User extends Abstracts implements FollowableInterface, GetableInterface
     public function enableMultiple(array $userIds): void
     {
         UserModel
-            ::where('user_id', $userIds)
+            ::where('id', $userIds)
             ->update('disable_time', 0);
     }
 
@@ -123,7 +123,7 @@ class User extends Abstracts implements FollowableInterface, GetableInterface
         }
 
         UserModel
-            ::where('user_id', $userId)
+            ::where('id', $userId)
             ->update('disable_time', Request::time());
 
         // 禁用后，删除该用户的所有token
@@ -140,7 +140,7 @@ class User extends Abstracts implements FollowableInterface, GetableInterface
     public function disableMultiple(array $userIds): void
     {
         $disableCount = UserModel
-            ::where('user_id', $userIds)
+            ::where('id', $userIds)
             ->update('disable_time', Request::time());
 
         if ($disableCount) {
@@ -243,11 +243,11 @@ class User extends Abstracts implements FollowableInterface, GetableInterface
 
         $user = UserModel
             ::where('email', $data['email'])
-            ->field('user_id')
+            ->field('id')
             ->get();
 
         UserModel
-            ::where('user_id', $user['user_id'])
+            ::where('id', $user['id'])
             ->update('password', $data['password']);
 
         // 密码更新后，所有设备都需要重新登录，因此所有 token 都要失效
@@ -271,7 +271,7 @@ class User extends Abstracts implements FollowableInterface, GetableInterface
         }
 
         UserModel
-            ::where('user_id', $userId)
+            ::where('id', $userId)
             ->update($data);
     }
 }

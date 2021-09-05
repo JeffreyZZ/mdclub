@@ -17,7 +17,7 @@ use MDClub\Facade\Transformer\FollowTransformer;
 class User extends Abstracts
 {
     protected $table = 'user';
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'id';
     protected $availableIncludes = ['is_followed', 'is_following', 'is_me'];
     protected $userExcept = [
         'password',
@@ -42,12 +42,12 @@ class User extends Abstracts
      */
     protected function format(array $item): array
     {
-        if (isset($item['user_id'], $item['avatar'])) {
-            $item['avatar'] = UserAvatarService::getBrandUrls($item['user_id'], $item['avatar']);
+        if (isset($item['id'], $item['avatar'])) {
+            $item['avatar'] = UserAvatarService::getBrandUrls($item['id'], $item['avatar']);
         }
 
-        if (isset($item['user_id'], $item['cover'])) {
-            $item['cover'] = UserCoverService::getBrandUrls($item['user_id'], $item['cover']);
+        if (isset($item['id'], $item['cover'])) {
+            $item['cover'] = UserCoverService::getBrandUrls($item['id'], $item['cover']);
         }
 
         if (isset($item['headline'])) {
@@ -115,7 +115,7 @@ class User extends Abstracts
     protected function isFollowing(array $items, array $knownRelationship): array
     {
         $userId = Auth::userId();
-        $keys = collect($items)->pluck('user_id')->unique()->diff($userId)->all();
+        $keys = collect($items)->pluck('id')->unique()->diff($userId)->all();
         $followingKeys = [];
 
         if ($keys && $userId) {
@@ -127,7 +127,7 @@ class User extends Abstracts
         }
 
         foreach ($items as &$item) {
-            $item['relationships']['is_following'] = in_array($item['user_id'], $followingKeys);
+            $item['relationships']['is_following'] = in_array($item['id'], $followingKeys);
         }
 
         return $items;
@@ -144,7 +144,7 @@ class User extends Abstracts
         $userId = Auth::userId();
 
         foreach ($items as &$item) {
-            $item['relationships']['is_me'] = $userId === $item['user_id'];
+            $item['relationships']['is_me'] = $userId === $item['id'];
         }
 
         return $items;
@@ -163,13 +163,13 @@ class User extends Abstracts
         }
 
         $users = UserModel
-            ::field(['user_id', 'avatar', 'username', 'headline'])
+            ::field(['id', 'avatar', 'username', 'headline'])
             ->select($userIds);
 
         return collect($users)
-            ->keyBy('user_id')
+            ->keyBy('id')
             ->map(function ($item) {
-                $item['avatar'] = UserAvatarService::getBrandUrls($item['user_id'], $item['avatar']);
+                $item['avatar'] = UserAvatarService::getBrandUrls($item['id'], $item['avatar']);
                 $item['headline'] = htmlspecialchars($item['headline']);
 
                 return $item;

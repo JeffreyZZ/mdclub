@@ -249,7 +249,7 @@ class Question extends Abstracts implements
                 UserModel::dec('following_question_count', $user['following_question_count']);
             }
 
-            UserModel::where('user_id', $userId)->update();
+            UserModel::where('id', $userId)->update();
         }
 
         // 提问所属的话题的 question_count - 1

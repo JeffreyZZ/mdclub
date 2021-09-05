@@ -45,7 +45,7 @@ class Token extends Abstracts
 
         $user = UserModel
             ::where($this->isEmail($data['name']) ? 'email' : 'username', $data['name'])
-            ->field(['user_id', 'password', 'disable_time'])
+            ->field(['id', 'password', 'disable_time'])
             ->get();
 
         $errors = [];
@@ -62,6 +62,6 @@ class Token extends Abstracts
             throw new ValidationException($errors, $isNeedCaptcha);
         }
 
-        return $user['user_id'];
+        return $user['id'];
     }
 }
