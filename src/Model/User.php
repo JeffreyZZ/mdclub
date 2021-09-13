@@ -78,7 +78,33 @@ class User extends Abstracts
      */
     private function passwordHash($password)
     {
-        return password_hash($password, PASSWORD_DEFAULT);
+        # return password_hash($password, PASSWORD_DEFAULT);
+        return $this->django_password_hash($password);
+    }
+
+    /**
+     * Django PBKDF2 密码加密方式
+     * @ref https://stackoverflow.com/questions/39310898
+     * @param  string      $password
+     * @return bool|string
+     */
+    private function django_password_hash($password)
+    {
+        $algo = "sha256";
+        $iterations = 26000;
+        // Generate a random IV using openssl_random_pseudo_bytes()
+        // random_bytes() or another suitable source of randomness
+        $salt = base64_encode(openssl_random_pseudo_bytes(16));
+        $hash = hash_pbkdf2(
+            $algo, 
+            $password, 
+            $salt, 
+            (int) $iterations,
+            32,
+            true
+        );
+
+        return "pbkdf2_".$algo."$".$iterations."$".$salt."$".base64_encode($hash);
     }
 
     /**

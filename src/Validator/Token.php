@@ -54,7 +54,7 @@ class Token extends Abstracts
             $errors['password'] = '账号或密码错误';
         } elseif ($user['disable_time']) {
             $errors['name'] = '该账号已被禁用';
-        } elseif (!password_verify($data['password'], $user['password'])) {
+        } elseif (!$this->django_password_verify($data['password'], $user['password'])) {
             $errors['password'] = '账号或密码错误';
         }
 
@@ -64,4 +64,36 @@ class Token extends Abstracts
 
         return $user['id'];
     }
+
+    /**
+     * Verify a Django password (PBKDF2-SHA256)
+     *
+     * @ref http://stackoverflow.com/a/39311299/2224584
+     * @param string $password   The password provided by the user
+     * @param string $djangoHash The hash stored in the Django app
+     * @return bool
+     * @throws Exception
+     */
+    function django_password_verify(string $password, string $djangoHash): bool
+    {
+        $pieces = explode('$', $djangoHash);
+        list($header, $iter, $salt, $hash) = $pieces;
+        
+        // Get the hash algorithm used:
+        if (preg_match('#^pbkdf2_([a-z0-9A-Z]+)$#', $header, $m)) {
+            $algo = $m[1];
+        }
+
+        $calc = hash_pbkdf2(
+            $algo,
+            $password,
+            $salt,
+            (int) $iter,
+            32,
+            true
+        );
+
+        return hash_equals($calc, base64_decode($hash));
+    }
+
 }
