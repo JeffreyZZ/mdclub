@@ -42,7 +42,7 @@ class Token extends Abstracts
         $token = Str::guid();
 
         TokenModel
-            ::set('token', $token)
+            ::set('key', $token)
             ->set('user_id', $userId)
             ->set('device', $data['device'])
             ->set('expire_time', Request::time() + Auth::getLifeTime())

@@ -10,11 +10,11 @@ namespace MDClub\Model;
 class Token extends Abstracts
 {
     public $table = 'token';
-    public $primaryKey = 'token';
+    public $primaryKey = 'key';
     protected $timestamps = true;
 
     public $columns = [
-        'token',
+        'key',
         'user_id',
         'device',
         'create_time',

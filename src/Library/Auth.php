@@ -117,12 +117,18 @@ class Auth
 
         // token 有效，自动续期
         if ($this->lifeTime - ($tokenInfo['expire_time'] - $requestTime) > 86400) {
-            TokenModel::where('token', $token)
+            TokenModel::where('key', $token)
                 ->update('expire_time', $requestTime + $this->lifeTime);
         }
 
-        $this->tokenInfo = $tokenInfo;
+        // rename the item's name from 'key' -> 'token' to be compliant with the frontend 
+        // after we rename the Db column name from 'token' -> 'key'
+        if (array_key_exists('key', $tokenInfo)) {
+            $tokenInfo['token'] = $tokenInfo['key'];
+            unset($tokenInfo['key']);
+        }
 
+        $this->tokenInfo = $tokenInfo;
         return $tokenInfo;
     }
 

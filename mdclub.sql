@@ -256,13 +256,13 @@ CREATE TABLE IF NOT EXISTS `report` (
 
 DROP TABLE IF EXISTS `token`;
 CREATE TABLE IF NOT EXISTS `token` (
-  `token` varchar(50) NOT NULL DEFAULT '' COMMENT 'token 字符串',
+  `key` varchar(50) NOT NULL DEFAULT '' COMMENT 'token 字符串',
   `user_id` int(11) UNSIGNED NOT NULL COMMENT '用户ID',
   `device` varchar(600) NOT NULL DEFAULT '' COMMENT '登陆设备，浏览器 UA 等信息',
   `create_time` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '更新时间',
   `expire_time` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '过期时间',
-  PRIMARY KEY (`token`),
+  PRIMARY KEY (`key`),
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户TOKEN';
 
@@ -298,7 +298,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` varchar(320) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '邮箱',
   `avatar` varchar(50) DEFAULT NULL COMMENT '头像token',
   `cover` varchar(50) DEFAULT NULL COMMENT '封面图片token',
-  `password` varchar(255) NOT NULL COMMENT '密码',
+  `password` varchar(128) NOT NULL COMMENT '密码',
   `create_ip` varchar(80) DEFAULT NULL COMMENT '注册IP',
   `create_location` varchar(100) DEFAULT NULL COMMENT '注册地址',
   `last_login` DATETIME(6) DEFAULT NULL COMMENT '最后登录时间',
