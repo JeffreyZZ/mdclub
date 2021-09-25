@@ -254,8 +254,8 @@ CREATE TABLE IF NOT EXISTS `report` (
   KEY `create_time` (`create_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='举报';
 
-DROP TABLE IF EXISTS `token`;
-CREATE TABLE IF NOT EXISTS `token` (
+DROP TABLE IF EXISTS `account_token`;
+CREATE TABLE IF NOT EXISTS `account_token` (
   `key` varchar(50) NOT NULL DEFAULT '' COMMENT 'token 字符串',
   `user_id` int(11) UNSIGNED NOT NULL COMMENT '用户ID',
   `device` varchar(600) NOT NULL DEFAULT '' COMMENT '登陆设备，浏览器 UA 等信息',
@@ -291,8 +291,8 @@ CREATE TABLE IF NOT EXISTS `topicable` (
   KEY `topicable_id` (`topicable_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE IF NOT EXISTS `user` (
+DROP TABLE IF EXISTS `account_user`;
+CREATE TABLE IF NOT EXISTS `account_user` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `username` varchar(20) NOT NULL COMMENT '用户名',
   `email` varchar(320) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '邮箱',

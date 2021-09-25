@@ -9,7 +9,7 @@ namespace MDClub\Model;
  */
 class Token extends Abstracts
 {
-    public $table = 'token';
+    public $table = 'account_token';
     public $primaryKey = 'key';
     protected $timestamps = true;
 

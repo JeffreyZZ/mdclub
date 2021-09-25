@@ -13,7 +13,7 @@ use MDClub\Helper\Ip;
  */
 class User extends Abstracts
 {
-    public $table = 'user';
+    public $table = 'account_user';
     public $primaryKey = 'id';
     protected $timestamps = true;
 
