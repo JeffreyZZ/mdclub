@@ -129,8 +129,9 @@ class Index
         UserAvatarService::delete($userId);
 
         // 把 user 表的 auto_increment 设为 10000
+        // TODO: remove hard-coded database name 'accounts_user' used here.
         $database
-            ->query("alter table ${requestBody['db_database']}.${requestBody['db_prefix']}user auto_increment=10000;");
+            ->query("alter table ${requestBody['db_database']}.${requestBody['db_prefix']}accounts_user auto_increment=10000;");
 
         // 写入 config.php 文件
         $configFile = "<?php

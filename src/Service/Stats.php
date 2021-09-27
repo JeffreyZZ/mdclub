@@ -153,10 +153,11 @@ class Stats
      * 获取用户新增记录
      *
      * @return array
+     * TODO: remove hard-coded database name 'accounts_user' dependency here.
      */
     protected function newUser(): array
     {
-        return $this->getNewData('user');
+        return $this->getNewData('accounts_user');
     }
 
     /**
