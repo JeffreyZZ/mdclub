@@ -29,7 +29,7 @@ trait Followable
     public function addFollow(int $followableId): void
     {
         $model = $this->getModelInstance();
-        $table = $model->table;
+        $table = $model->table == 'accounts_user' ? 'user' : $model->table;
         $isUser = $table === 'user';
         $userId = Auth::userId();
 
@@ -64,7 +64,7 @@ trait Followable
     public function deleteFollow(int $followableId): void
     {
         $model = $this->getModelInstance();
-        $table = $model->table;
+        $table = $model->table == 'accounts_user' ? 'user' : $model->table;
         $isUser = $table === 'user';
         $userId = Auth::userId();
 
@@ -99,9 +99,9 @@ trait Followable
     public function getFollowers(int $followableId): array
     {
         $model = $this->getModelInstance();
-        $table = $model->table;
+        $table = $model->table == 'accounts_user' ? 'user' : $model->table;
 
-        /** @var QuestionService $class */
+        /** @var QuestionService $class */       
         $class = '\MDClub\Facade\Service\\' . ucfirst($table) . 'Service';
 
         $class::hasOrFail($followableId);
@@ -116,7 +116,7 @@ trait Followable
                 [
                     'follow.followable_id' => $followableId,
                     'follow.followable_type' => $table,
-                    'user.disable_time' => 0,
+                    $model->table . '.disable_time' => 0,
                 ]
             )
             ->order('follow.create_time', 'DESC')
@@ -129,7 +129,7 @@ trait Followable
     public function getFollowing(int $userId): array
     {
         $model = $this->getModelInstance();
-        $table = $model->table;
+        $table = $model->table == 'accounts_user' ? 'user' : $model->table;
         UserService::hasOrFail($userId);
 
         $idColName = "${table}_id";
@@ -175,7 +175,7 @@ trait Followable
     protected function isFollowing(int $followableId): bool
     {
         $model = $this->getModelInstance();
-        $table = $model->table;
+        $table = $model->table == 'accounts_user' ? 'user' : $model->table;
 
         /** @var QuestionService $class */
         $class = '\MDClub\Facade\Service\\' . ucfirst($table) . 'Service';
