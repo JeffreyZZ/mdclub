@@ -23,7 +23,7 @@
     echo get_user_id() ? json_encode(get_user(null)) : 'null' ?>;
 </script>
 <?php if ($NODE_ENV === 'production'): ?>
-<script src="<?= get_static_url() ?>/admin/index.8cf24976.js"></script>
+<script src="<?= get_static_url() ?>/admin/index.2cc3eaf4.js"></script>
 <?php else: ?>
 <script src="http://localhost:8081/index.js"></script>
 <?php endif; ?>

@@ -23,7 +23,7 @@ class User extends Abstracts
         'id',
         'username',
         'email',
-        'avatar',
+        'avatar_text',
         'cover',
         'password',
         'create_ip',
@@ -113,7 +113,7 @@ class User extends Abstracts
     protected function beforeInsert(array $data): array
     {
         $data = collect($data)->union([
-            'avatar' => '',
+            'avatar_text' => '',
             'cover' => '',
             'create_ip' => Ip::getIp(),
             'create_location' => Ip::getLocation(),

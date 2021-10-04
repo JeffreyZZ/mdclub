@@ -296,7 +296,7 @@ CREATE TABLE IF NOT EXISTS `accounts_user` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `username` varchar(20) NOT NULL COMMENT '用户名',
   `email` varchar(320) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '邮箱',
-  `avatar` varchar(50) DEFAULT NULL COMMENT '头像token',
+  `avatar_text` varchar(50) DEFAULT NULL COMMENT '头像token',
   `cover` varchar(50) DEFAULT NULL COMMENT '封面图片token',
   `password` varchar(128) NOT NULL COMMENT '密码',
   `create_ip` varchar(80) DEFAULT NULL COMMENT '注册IP',

@@ -42,8 +42,8 @@ class User extends Abstracts
      */
     protected function format(array $item): array
     {
-        if (isset($item['id'], $item['avatar'])) {
-            $item['avatar'] = UserAvatarService::getBrandUrls($item['id'], $item['avatar']);
+        if (isset($item['id'], $item['avatar_text'])) {
+            $item['avatar_text'] = UserAvatarService::getBrandUrls($item['id'], $item['avatar_text']);
         }
 
         if (isset($item['id'], $item['cover'])) {
@@ -83,7 +83,7 @@ class User extends Abstracts
     protected function isFollowed(array $items, array $knownRelationship): array
     {
         $currentUserId = Auth::userId();
-        $userIds = collect($items)->pluck('user_id')->unique()->diff($currentUserId)->all();
+        $userIds = collect($items)->pluck('id')->unique()->diff($currentUserId)->all();
         $followedUserIds = [];
 
         if ($userIds && $currentUserId) {
@@ -99,7 +99,7 @@ class User extends Abstracts
         }
 
         foreach ($items as &$item) {
-            $item['relationships']['is_followed'] =  in_array($item['user_id'], $followedUserIds);
+            $item['relationships']['is_followed'] =  in_array($item['id'], $followedUserIds);
         }
 
         return $items;
@@ -163,13 +163,13 @@ class User extends Abstracts
         }
 
         $users = UserModel
-            ::field(['id', 'avatar', 'username', 'headline'])
+            ::field(['id', 'avatar_text', 'username', 'headline'])
             ->select($userIds);
 
         return collect($users)
             ->keyBy('id')
             ->map(function ($item) {
-                $item['avatar'] = UserAvatarService::getBrandUrls($item['id'], $item['avatar']);
+                $item['avatar_text'] = UserAvatarService::getBrandUrls($item['id'], $item['avatar_text']);
                 $item['headline'] = htmlspecialchars($item['headline']);
 
                 return $item;

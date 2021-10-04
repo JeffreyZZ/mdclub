@@ -67,11 +67,11 @@ class UserAvatar
     {
         $data = UserAvatarValidator::upload($data);
 
-        $user = UserModel::field(['id', 'avatar'])->get($userId);
-        $this->deleteImage($userId, $user['avatar']);
+        $user = UserModel::field(['id', 'avatar_text'])->get($userId);
+        $this->deleteImage($userId, $user['avatar_text']);
 
         $filename = $this->uploadImage($userId, $data['avatar']);
-        UserModel::where('id', $userId)->update('avatar', $filename);
+        UserModel::where('id', $userId)->update('avatar_text', $filename);
 
         return $filename;
     }
@@ -85,14 +85,14 @@ class UserAvatar
      */
     public function delete(int $userId): string
     {
-        $user = UserModel::field(['id', 'username', 'avatar'])->get($userId);
+        $user = UserModel::field(['id', 'username', 'avatar_text'])->get($userId);
         if (!$user) {
             throw new ApiException(ApiErrorConstant::USER_NOT_FOUND);
         }
 
         // 删除旧头像
-        if ($user['avatar']) {
-            $this->deleteImage($userId, $user['avatar']);
+        if ($user['avatar_text']) {
+            $this->deleteImage($userId, $user['avatar_text']);
         }
 
         // 生成新头像
@@ -105,7 +105,7 @@ class UserAvatar
 
         // 上传新头像
         $filename = $this->uploadImage($userId, $uploadedFile);
-        UserModel::where('id', $userId)->update('avatar', $filename);
+        UserModel::where('id', $userId)->update('avatar_text', $filename);
 
         return $filename;
     }
