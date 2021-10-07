@@ -254,18 +254,6 @@ CREATE TABLE IF NOT EXISTS `report` (
   KEY `create_time` (`create_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='举报';
 
-DROP TABLE IF EXISTS `accounts_token`;
-CREATE TABLE IF NOT EXISTS `accounts_token` (
-  `key` varchar(50) NOT NULL DEFAULT '' COMMENT 'token 字符串',
-  `user_id` int(11) UNSIGNED NOT NULL COMMENT '用户ID',
-  `device` varchar(600) NOT NULL DEFAULT '' COMMENT '登陆设备，浏览器 UA 等信息',
-  `create_time` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `expire_time` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '过期时间',
-  PRIMARY KEY (`key`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户TOKEN';
-
 DROP TABLE IF EXISTS `topic`;
 CREATE TABLE IF NOT EXISTS `topic` (
   `topic_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '话题ID',
@@ -290,44 +278,6 @@ CREATE TABLE IF NOT EXISTS `topicable` (
   KEY `topic_id` (`topic_id`),
   KEY `topicable_id` (`topicable_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-DROP TABLE IF EXISTS `accounts_user`;
-CREATE TABLE IF NOT EXISTS `accounts_user` (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-  `username` varchar(20) NOT NULL COMMENT '用户名',
-  `email` varchar(320) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '邮箱',
-  `avatar_text` varchar(50) DEFAULT NULL COMMENT '头像token',
-  `cover` varchar(50) DEFAULT NULL COMMENT '封面图片token',
-  `password` varchar(128) NOT NULL COMMENT '密码',
-  `create_ip` varchar(80) DEFAULT NULL COMMENT '注册IP',
-  `create_location` varchar(100) DEFAULT NULL COMMENT '注册地址',
-  `last_login` DATETIME(6) DEFAULT NULL COMMENT '最后登录时间',
-  `last_login_ip` varchar(80) DEFAULT NULL COMMENT '最后登陆IP',
-  `last_login_location` varchar(100) DEFAULT NULL COMMENT '最后登录地址',
-  `follower_count` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '关注我的人数',
-  `followee_count` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '我关注的人数',
-  `following_article_count` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '我关注的文章数',
-  `following_question_count` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '我关注的问题数',
-  `following_topic_count` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '我关注的话题数',
-  `article_count` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '我发表的文章数量',
-  `question_count` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '我发表的问题数量',
-  `answer_count` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '我发表的回答数量',
-  `notification_unread` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '未读通知数',
-  `inbox_unread` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '未读私信数',
-  `headline` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '一句话介绍',
-  `bio` varchar(160) DEFAULT NULL COMMENT '个人简介',
-  `blog` varchar(255) DEFAULT NULL COMMENT '个人主页',
-  `company` varchar(255) DEFAULT NULL COMMENT '公司名称',
-  `location` varchar(255) DEFAULT NULL COMMENT '地址',
-  `create_time` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '注册时间',
-  `update_time` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `disable_time` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '禁用时间',
-  PRIMARY KEY (`id`),
-  KEY `user_name` (`username`),
-  KEY `email` (`email`),
-  KEY `follower_count` (`follower_count`),
-  KEY `create_time` (`create_time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户表';
 
 DROP TABLE IF EXISTS `vote`;
 CREATE TABLE IF NOT EXISTS `vote` (
