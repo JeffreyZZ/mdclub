@@ -91,7 +91,7 @@ class User extends Abstracts
     private function django_password_hash($password)
     {
         $algo = "sha256";
-        $iterations = 26000;
+        $iterations = 260000;
         // Generate a random IV using openssl_random_pseudo_bytes()
         // random_bytes() or another suitable source of randomness
         $salt = base64_encode(openssl_random_pseudo_bytes(16));

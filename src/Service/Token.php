@@ -39,8 +39,28 @@ class Token extends Abstracts
         }
 
         $userId = TokenValidator::create($data);
-        $token = Str::guid();
+        // user_id column of accounts_token table is defined like this 
+        //     UNIQUE KEY 'user_id'('user_id')
+        // user_id cannot be duplicate, so we  need to reuse the existing valid token or delete  
+        // the expired token before create a new token in the table.  
+        $tokenInfo = TokenModel::where('user_id', $userId)->get();
+        if ($tokenInfo)
+        {
+            // token 已过期，删除该 token
+            $requestTime = Request::time();
+            if ($tokenInfo['expire_time'] < $requestTime) {
+                TokenModel::delete($tokenInfo['key']);
+                $tokenInfo = false;
+            }
+        }
 
+        // token 没有过期，继续使用
+        if($tokenInfo)
+        {
+            return $tokenInfo['key'];
+        }
+
+        $token = Str::guid();
         TokenModel
             ::set('key', $token)
             ->set('user_id', $userId)

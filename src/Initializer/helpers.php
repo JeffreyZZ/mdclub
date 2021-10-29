@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use MDClub\Facade\Library\Auth;
 use MDClub\Facade\Library\Option;
+use MDClub\Facade\Library\Storage;
+use MDClub\Facade\Model\UserModel;
 use MDClub\Facade\Service\AnswerService;
 use MDClub\Facade\Service\ArticleService;
 use MDClub\Facade\Service\CommentService;
@@ -16,11 +18,15 @@ use MDClub\Facade\Transformer\CommentTransformer;
 use MDClub\Facade\Transformer\QuestionTransformer;
 use MDClub\Facade\Transformer\TopicTransformer;
 use MDClub\Facade\Transformer\UserTransformer;
+use MDClub\Helper\Str;
 use MDClub\Helper\Url;
 use MDClub\Initializer\App;
 use MDClub\Initializer\Collection;
+use MDClub\Vendor\MDAvatars;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\UploadedFileInterface;
 use Slim\Interfaces\RouteInterface;
+use Slim\Psr7\UploadedFile;
 use Slim\Routing\RouteContext;
 
 /**
@@ -169,6 +175,65 @@ function get_user_id()
 }
 
 /**
+ * 图片尺寸，宽高比为 1
+ *
+ * @return array
+ */
+function getBrandSize(): array
+{
+    return [
+        'small' => [64, 64],
+        'middle' => [128, 128],
+        'large' => [256, 256],
+    ];
+}
+
+/**
+ * 图片类型
+ *
+ * @return string
+ */
+function getBrandType(): string
+{
+    return 'user-avatar';
+}
+
+/**
+ * 获取文件存储的相对路径
+ *
+ * @param  int    $id
+ * @param  string $filename
+ * @return string
+ */
+function getBrandPath(int $id, string $filename): string
+{
+    $hash = md5((string)$id);
+    $path = implode('/', [getBrandType(), substr($hash, 0, 2), substr($hash, 2, 2)]);
+
+    return "/{$path}/{$filename}";
+}
+
+/**
+ * 上传图片
+ *
+ * @param  int                   $id
+ * @param  UploadedFileInterface $file UploadedFile对象
+ * @return string                      文件名（不含路径）
+ */
+function uploadImage(int $id, UploadedFileInterface $file): string
+{
+    $token = Str::guid();
+    $suffix = $file->getClientMediaType() === 'image/png' ? 'png' : 'jpg';
+    $filename = "{$token}.{$suffix}";
+    $path = getBrandPath($id, $filename);
+    $thumbs = getBrandSize();
+
+    Storage::write($path, $file->getStream(), $thumbs);
+
+    return $filename;
+}
+
+/**
  * 获取用户信息
  *
  * 若 $userId 为 null，则获取当前登录用户的信息
@@ -188,8 +253,26 @@ function get_user(int $userId = null, array $queryParams = []): array
     }
 
     $user = UserService::getOrFail($userId);
-    $user = UserTransformer::transform($user);
+    // user created by knboard doesn't fill in avatar_text by default. This step is 
+    // to check those knboard users and create the default avatar for them before use them.
+    // TODO: there are duplicate codes with trait Brandable in Service\Traits\Brandable.php
+    if(!$user['avatar_text'])
+    {
+        // 生成新头像
+        $Avatar = new MDAvatars(mb_substr($user['username'], 0, 1));
+        $avatarTmpFilename = Str::guid() . '.png';
+        $avatarTmpPath = sys_get_temp_dir() . '/' . $avatarTmpFilename;
+        $Avatar->save($avatarTmpPath);
+        $Avatar->free();
+        $uploadedFile = new UploadedFile($avatarTmpPath, $avatarTmpFilename, 'image/png');
 
+        // 上传新头像
+        $filename = uploadImage($userId, $uploadedFile);
+        UserModel::where('id', $userId)->update('avatar_text', $filename);
+    }
+
+    $user = UserService::getOrFail($userId);
+    $user = UserTransformer::transform($user);
     return $user;
 }
 
