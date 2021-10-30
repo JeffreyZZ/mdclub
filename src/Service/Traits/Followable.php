@@ -116,7 +116,7 @@ trait Followable
                 [
                     'follow.followable_id' => $followableId,
                     'follow.followable_type' => $table,
-                    $model->table . '.disable_time' => 0,
+                    'accounts_user.disable_time' => 0,
                 ]
             )
             ->order('follow.create_time', 'DESC')
