@@ -162,8 +162,11 @@ class User extends Abstracts
      */
     public function getList(): array
     {
+        // When avatar_text is NULL, that means the user (mainly knboard user）doesn't log in via mdclub yet.
+        // so we exclude those users for now. [!] is a medoo way to express is NOT NULL in where clause.
+        // TODO: fill in avatar_text when created in knboard.  
         return $this
-            ->where($this->getWhereFromRequest(['disable_time' => 0]))
+            ->where($this->getWhereFromRequest(['disable_time' => 0, 'avatar_text[!]' => null])) 
             ->order($this->getOrderFromRequest(['create_time' => 'ASC']))
             ->paginate();
     }
