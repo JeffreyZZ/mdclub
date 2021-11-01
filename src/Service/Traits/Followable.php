@@ -52,8 +52,9 @@ trait Followable
             ->inc($isUser ? 'followee_count' : "following_${table}_count")
             ->update();
 
+        $tableId = $isUser ? 'id' : "{$table}_id";
         $model
-            ->where("${table}_id", $followableId)
+            ->where($tableId, $followableId)
             ->inc('follower_count')
             ->update();
     }
@@ -87,8 +88,9 @@ trait Followable
             ->dec($isUser ? 'followee_count' : "following_{$table}_count")
             ->update();
 
+        $tableId = $isUser ? 'id' : "{$table}_id";
         $model
-            ->where("{$table}_id", $followableId)
+            ->where($tableId, $followableId)
             ->dec('follower_count')
             ->update();
     }
