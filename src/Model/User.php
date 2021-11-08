@@ -136,6 +136,8 @@ class User extends Abstracts
             'company' => '',
             'location' => '',
             'disable_time' => 0,
+            'is_active' => true,
+            'date_joined' => Request::getDatetimeStr()
         ])->all();
 
         $data['password'] = $this->passwordHash($data['password']);
