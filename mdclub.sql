@@ -216,30 +216,6 @@ INSERT INTO `option` (`name`, `value`) VALUES
 ('storage_url', ''),
 ('theme', 'material');
 
-DROP TABLE IF EXISTS `question`;
-CREATE TABLE IF NOT EXISTS `question` (
-  `question_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '问题ID',
-  `user_id` int(11) UNSIGNED NOT NULL COMMENT '用户ID',
-  `title` varchar(80) NOT NULL COMMENT '标题',
-  `content_markdown` text COMMENT '原始的正文内容',
-  `content_rendered` text COMMENT '过滤渲染后的正文内容',
-  `comment_count` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '评论数量',
-  `answer_count` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '回答数量',
-  `follower_count` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '关注者数量',
-  `vote_count` int(11) NOT NULL DEFAULT '0' COMMENT '投票数，赞成票-反对票，可以为负数',
-  `vote_up_count` int(11) NOT NULL DEFAULT '0' COMMENT '赞成票总数',
-  `vote_down_count` int(11) NOT NULL DEFAULT '0' COMMENT '反对票总数',
-  `last_answer_time` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '最后回答时间',
-  `create_time` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `delete_time` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '删除时间',
-  PRIMARY KEY (`question_id`),
-  KEY `user_id` (`user_id`),
-  KEY `create_time` (`create_time`),
-  KEY `update_time` (`update_time`),
-  KEY `vote_count` (`vote_count`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='问题表';
-
 DROP TABLE IF EXISTS `report`;
 CREATE TABLE IF NOT EXISTS `report` (
   `report_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
