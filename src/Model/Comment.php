@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MDClub\Model;
 
 use MDClub\Facade\Library\Auth;
+use MDClub\Facade\Library\Request;
 
 /**
  * 评论模型
@@ -62,6 +63,8 @@ class Comment extends Abstracts
             'vote_up_count'   => 0,
             'vote_down_count' => 0,
             'reply_count'     => 0,
+            'created' => Request::getDatetimeStr(),
+            'modified' => Request::getDatetimeStr(),
         ])->all();
     }
 

@@ -49,27 +49,6 @@ CREATE TABLE IF NOT EXISTS `cache` (
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='缓存表';
 
-DROP TABLE IF EXISTS `comment`;
-CREATE TABLE IF NOT EXISTS `comment` (
-  `comment_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '回答评论ID',
-  `commentable_id` int(11) UNSIGNED NOT NULL COMMENT '评论目标的ID',
-  `commentable_type` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '评论目标类型：article、question、answer、comment',
-  `user_id` int(11) UNSIGNED NOT NULL COMMENT '用户ID',
-  `content` text NOT NULL COMMENT '原始正文内容',
-  `reply_count` int(11) NOT NULL DEFAULT '0' COMMENT '回复数量',
-  `vote_count` int(11) NOT NULL DEFAULT '0' COMMENT '投票数，赞成票-反对票，可以为负数',
-  `vote_up_count` int(11) NOT NULL DEFAULT '0' COMMENT '赞成票总数',
-  `vote_down_count` int(11) NOT NULL DEFAULT '0' COMMENT '反对票总数',
-  `create_time` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `delete_time` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '删除时间',
-  PRIMARY KEY (`comment_id`),
-  KEY `user_id` (`user_id`),
-  KEY `commentable_id` (`commentable_id`),
-  KEY `create_time` (`create_time`),
-  KEY `vote_count` (`vote_count`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='回答评论表';
-
 DROP TABLE IF EXISTS `follow`;
 CREATE TABLE IF NOT EXISTS `follow` (
   `user_id` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '用户ID',
