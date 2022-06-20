@@ -23,3 +23,10 @@ RUN composer install --no-dev
 COPY . /var/www/html
 # overwrite the default 000-default.conf file
 COPY 000-default.conf /etc/apache2/sites-available/
+
+# 
+RUN chown -R www-data:www-data /var/www
+
+# Enable the following module, this is necessary to find the files, such as install.php
+RUN cp /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/ && \
+    cp /etc/apache2/mods-available/headers.load /etc/apache2/mods-enabled/
