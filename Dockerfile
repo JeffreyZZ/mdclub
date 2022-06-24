@@ -12,6 +12,14 @@ RUN apt-get install -y zip
 RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install mbstring
 RUN docker-php-ext-install fileinfo
+
+# freetype-dir ext is equired for imagettftext()
+RUN apt-get install -y \
+    libwebp-dev \
+    libfreetype6-dev
+RUN docker-php-ext-configure gd \
+    --with-gd \
+    --with-freetype-dir
 RUN docker-php-ext-install gd
 
 # install Composer
