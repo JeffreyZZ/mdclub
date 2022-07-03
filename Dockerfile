@@ -14,12 +14,15 @@ RUN docker-php-ext-install mbstring
 RUN docker-php-ext-install fileinfo
 
 # freetype-dir ext is equired for imagettftext()
+# jpeg-dir ext is required for imagecreatefromjpeg()
 RUN apt-get install -y \
     libwebp-dev \
-    libfreetype6-dev
+    libfreetype6-dev \
+    libjpeg-dev
 RUN docker-php-ext-configure gd \
     --with-gd \
-    --with-freetype-dir
+    --with-freetype-dir \
+    --with-jpeg-dir
 RUN docker-php-ext-install gd
 
 # install Composer
